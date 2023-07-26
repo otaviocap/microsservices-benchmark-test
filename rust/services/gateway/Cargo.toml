@@ -1,0 +1,13 @@
+# Reference: https://github.com/tokio-rs/axum/tree/main/examples/reverse-proxy
+
+[package]
+name = "gateway"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+axum  = { git = "https://github.com/tokio-rs/axum" }
+hyper = { version = "0.14.27", features = ["full"] }
+tokio = { version = "1.29.1", features = ["full"]  }

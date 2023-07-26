@@ -1,0 +1,6 @@
+{
+    "rust-analyzer.linkedProjects": [
+        "./rust/services/gateway/Cargo.toml",
+        "./rust/services/db-consumer/Cargo.toml"
+    ]
+}

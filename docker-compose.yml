@@ -1,0 +1,17 @@
+#include:
+#- ./rust/compose.yml
+#- ./go/docker/compose.yml
+
+services:
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 9001:5432
+    environment:
+      - POSTGRES_DB=root
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - PG_DATA=/var/lib/pg_data
+    volumes:
+      - ./data/postgres-data:/var/lib/pg_data
