@@ -34,7 +34,7 @@ pub async fn run_server() {
 
 
 async fn handler(State(config): State<Configuration>, mut req: Request) -> Result<Response, StatusCode> {
-    println!("Request {:?}", req);
+    println!("Request: {req:?}");
 
     let path = req.uri().path();
 
@@ -44,13 +44,12 @@ async fn handler(State(config): State<Configuration>, mut req: Request) -> Resul
         .map(|v| v.as_str())
         .unwrap_or(path);
 
-    let query_parameters = path_query.split("/").collect::<Vec<&str>>();
+    let query_parameters = path_query.split('/').collect::<Vec<&str>>();
 
-    let selected_api = query_parameters
+    let selected_api = (*query_parameters
         .iter()
         .find(|e| !e.is_empty())
-        .expect("Expecting an API")
-        .to_string();
+        .expect("Expecting an API")).to_string();
 
     let new_uri = config.router
         .iter()
@@ -60,15 +59,13 @@ async fn handler(State(config): State<Configuration>, mut req: Request) -> Resul
         );
 
     *req.uri_mut() = Uri::try_from(
-        "".to_string() 
+        String::new()
         + &new_uri.redirect 
         + &query_parameters
             .get(2..)
             .unwrap_or_default()
             .join("/")
     ).expect("Invalid URI");
-
-    println!("{:?}", req);
 
     Ok(config.client
         .request(req)

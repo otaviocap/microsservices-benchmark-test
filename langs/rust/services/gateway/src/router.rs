@@ -14,7 +14,5 @@ pub fn get_routes() -> Router {
     let routes_data = fs::read_to_string("routes.json")
         .expect("Please create and configure routes json!");
 
-    let routes: Vec<Route> = serde_json::from_str(&routes_data).expect("Error parsing routes");
-
-    return routes;
+    serde_json::from_str(&routes_data).expect("Error parsing routes")
 }

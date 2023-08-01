@@ -13,7 +13,7 @@ impl Users {
         Users { pool }
     }
 
-    pub async fn get_all_users(&self) -> Vec<User> {
+    pub async fn get_all(&self) -> Vec<User> {
         sqlx::query_as!(User, r#"--sql
             SELECT * FROM users;
         "#)
@@ -22,7 +22,7 @@ impl Users {
         .expect("Something went wrong while querying users")
     }
 
-    pub async fn get_user_by_id(&self, id: Uuid) -> User{
+    pub async fn get(&self, id: Uuid) -> User{
         sqlx::query_as!(User, r#"--sql
             SELECT 
                 username,
@@ -33,10 +33,10 @@ impl Users {
         "#, id)
         .fetch_one(&self.pool)
         .await
-        .expect(format!("Something went wrong while querying user with id: {:?}", id).as_str()) 
+        .expect(&format!("Something went wrong while querying user with id: {id:?}")) 
     }
 
-    pub async fn add_user(&self, user: User) -> Result<Uuid, ()>{
+    pub async fn add(&self, user: User) -> Result<Uuid, ()>{
         let rec = sqlx::query!(r#"--sql
             INSERT INTO users (username, password)
             VALUES ($1, $2)
@@ -47,6 +47,31 @@ impl Users {
         .expect("Something went wrong while querying users");
 
         Ok(rec.id)
+    }
+
+    pub async fn edit(&self, id: Uuid, user: User) {
+        let rec = sqlx::query!(r#"--sql
+            UPDATE users
+            SET
+                username = $1,
+                password = $2
+            WHERE
+                id = $3
+        "#, user.username, user.password, id)
+        .execute(&self.pool)
+        .await
+        .expect("Something went wrong while updating user with id: {id:?}");
+    }
+
+    pub async fn delete(&self, id: Uuid) {
+        let rec = sqlx::query!(r#"--sql
+            DELETE FROM users
+            WHERE
+                id = $1
+        "#, id)
+        .execute(&self.pool)
+        .await
+        .expect("Something went wrong while deleting user with id: {id:?}");
     }
 
 

@@ -1,5 +1,5 @@
-include:
-- ./langs/rust/compose.yml
+#include:
+#- ./langs/rust/compose.yml
 #- ./langs/go/compose.yml
 
 services:

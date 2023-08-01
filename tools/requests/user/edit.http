@@ -1,0 +1,7 @@
+POST http://127.0.0.1:8080/users/b52187b0-3076-11ee-8d94-0242ac130002 HTTP/1.1
+content-type: application/json
+
+{
+	"username": "User Edited",
+	"password": "123"
+}

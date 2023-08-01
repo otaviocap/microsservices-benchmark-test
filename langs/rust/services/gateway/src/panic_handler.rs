@@ -10,7 +10,7 @@ pub fn handler(err: Box<dyn Any + Send + 'static>) -> Response<Body> {
     let details = if let Some(s) = err.downcast_ref::<String>() {
         s.clone()
     } else if let Some(s) = err.downcast_ref::<&str>() {
-        s.to_string()
+        (*s).to_string()
     } else {
         "Unknown panic message".to_string()
     };
