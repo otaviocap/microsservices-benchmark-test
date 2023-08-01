@@ -23,17 +23,19 @@ pub async fn run_server() {
 
     let app = Router::new().fallback(handler).layer(CatchPanicLayer::custom(panic_handler::handler)).with_state(configs);
 
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:8080")
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:8080")
         .await
         .unwrap();
 
-    println!("Rust Gateway listening on {}", listener.local_addr().unwrap());
+    println!("Rust Gateway listening on http://{}", listener.local_addr().unwrap());
     
     axum::serve(listener, app).await.unwrap();
 }
 
 
 async fn handler(State(config): State<Configuration>, mut req: Request) -> Result<Response, StatusCode> {
+    println!("Request {:?}", req);
+
     let path = req.uri().path();
 
     let path_query = req

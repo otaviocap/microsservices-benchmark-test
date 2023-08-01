@@ -7,11 +7,11 @@ async fn main() {
 
     println!("RUST => Db Consumer running!");
 
-    dotenv::dotenv().ok();
+    dotenvy::dotenv().ok();
 
     let app = server::build().await;
 
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:8080")
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:8080")
         .await
         .unwrap();
 

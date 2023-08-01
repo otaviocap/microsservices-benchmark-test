@@ -1,0 +1,32 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "--sql\n            SELECT * FROM users;\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "username",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 1,
+        "name": "password",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "id",
+        "type_info": "Uuid"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "e07f1ed72252294ca4c2f383efef5696e4b662d2c022cd1062123ce8b902045d"
+}

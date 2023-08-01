@@ -1,7 +1,7 @@
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use sqlx::types::Uuid;
 
-#[derive(sqlx::FromRow, Debug, Default, Serialize)]
+#[derive(Serialize, Deserialize, sqlx::FromRow, Debug, Default)]
 pub struct User {
     pub username: String,
     pub password: String,

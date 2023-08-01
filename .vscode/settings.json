@@ -1,7 +1,6 @@
 {
     "rust-analyzer.linkedProjects": [
-        "./rust/services/gateway/Cargo.toml",
-        "./rust/services/db-consumer/Cargo.toml",
-        "./rust/services/db-consumer/Cargo.toml"
+        "./langs/rust/services/gateway/Cargo.toml",
+        "./langs/rust/services/db-consumer/Cargo.toml",
     ]
 }

@@ -1,0 +1,23 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "--sql\n            INSERT INTO users (username, password)\n            VALUES ($1, $2)\n            RETURNING id\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "ed54da72d514728bac9079582c1a0f333ba4e9f0298347539a4138cace5e71dc"
+}

@@ -1,5 +1,9 @@
 services:
   rust-gateway:
     build: services/gateway/
+    ports:
+      - 9000:8080
   rust-db-consumer:
     build: services/db-consumer/
+    env_file:
+      - services/db-consumer/.docker.env
