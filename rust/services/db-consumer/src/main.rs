@@ -1,10 +1,6 @@
-mod user;
-
-use std::str::FromStr;
-
-use sqlx::{postgres::PgPoolOptions, types::Uuid};
-
-use crate::user::Users;
+mod components;
+mod utils;
+mod server;
 
 #[tokio::main]
 async fn main() {
@@ -13,20 +9,13 @@ async fn main() {
 
     dotenv::dotenv().ok();
 
-    let pool = PgPoolOptions::new()
-        .max_connections(5)
-        .connect(
-            std::env::var("DATABASE_URL")
-            .expect("DATABASE_URL must be set.")
-            .as_str()
-        )
+    let app = server::build().await;
+
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:8080")
         .await
-        .expect("Error connecting into the databse!");
+        .unwrap();
 
-    let users = Users::new(pool);
+    println!("Rust Db Consumer is listening on http://{}", listener.local_addr().unwrap());
 
-    println!("{:?}", users.getAllUsers().await);
-    println!("{:?}", users.getUserById(Uuid::parse_str("aa304752-2bf7-11ee-8732-0242ac140002").unwrap()).await);
-
-
+    axum::serve(listener, app).await.unwrap();
 }

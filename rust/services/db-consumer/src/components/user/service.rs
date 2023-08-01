@@ -1,23 +1,19 @@
 use sqlx::{types::Uuid, Pool, Postgres};
+use super::model::User;
 
-#[derive(sqlx::FromRow, Debug)]
-pub struct User {
-    pub username: String,
-    pub password: String,
-    pub id: Uuid,
-}
-
+#[derive(Clone)]
 pub struct Users {
     pool: Pool<Postgres>
 }
 
+#[allow(dead_code)]
 impl Users {
 
     pub fn new(pool: Pool<Postgres>) -> Users {
         Users { pool }
     }
 
-    pub async fn getAllUsers(&self) -> Vec<User> {
+    pub async fn get_all_users(&self) -> Vec<User> {
         sqlx::query_as!(User, r#"--sql
             SELECT * FROM users;
         "#)
@@ -26,7 +22,7 @@ impl Users {
         .expect("Something went wrong while querying users")
     }
 
-    pub async fn getUserById(&self, id: Uuid) -> User{
+    pub async fn get_user_by_id(&self, id: Uuid) -> User{
         sqlx::query_as!(User, r#"--sql
             SELECT 
                 username,
@@ -40,7 +36,7 @@ impl Users {
         .expect(format!("Something went wrong while querying user with id: {:?}", id).as_str()) 
     }
 
-    pub async fn addUser(&self, user: User) -> Result<Uuid, ()>{
+    pub async fn add_user(&self, user: User) -> Result<Uuid, ()>{
         let rec = sqlx::query!(r#"--sql
             INSERT INTO users (username, password)
             VALUES ($1, $2)

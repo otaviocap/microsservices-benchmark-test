@@ -1,6 +1,6 @@
-#include:
-#- ./rust/compose.yml
-#- ./go/docker/compose.yml
+include:
+- ./rust/compose.yml
+#- ./go/compose.yml
 
 services:
   db:
