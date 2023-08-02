@@ -1,5 +1,5 @@
 
-use axum::{Router, extract::{State, self}, routing::{get, post, delete}, Json, Error, response::Response, body::Body};
+use axum::{Router, extract::{State, self}, routing::{get, post, delete}, Json};
 use hyper::StatusCode;
 use serde_json::{json, Value};
 use uuid::Uuid;
@@ -42,17 +42,21 @@ async fn edit_user(
     extract::Path((id,)) : extract::Path<(Uuid, )>,
     extract::Json(user): extract::Json<User>
 ) -> StatusCode {
+    if config.users.edit(id, user).await {
+        return StatusCode::OK;
+    }
 
-    config.users.edit(id, user).await;
-
-    StatusCode::OK
+    StatusCode::NOT_FOUND
 }
 
 async fn delete_user(
     extract::Path((id,)) : extract::Path<(Uuid, )>,
     State(config): State<Configuration>
 ) -> StatusCode {
-    config.users.delete(id).await;
+    if config.users.delete(id).await {
+        return StatusCode::OK;
+    }
 
-    StatusCode::OK
+    StatusCode::NOT_FOUND
+
 }

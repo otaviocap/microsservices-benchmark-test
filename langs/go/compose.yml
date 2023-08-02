@@ -1,0 +1,9 @@
+services:
+  go-gateway:
+    build: services/gateway/
+    ports:
+      - 9020:8080
+    environment:
+      - GIN_MODE=release
+  go-db-consumer:
+    build: services/db-consumer/

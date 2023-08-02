@@ -46,10 +46,11 @@ impl Users {
         .await
         .expect("Something went wrong while querying users");
 
+
         Ok(rec.id)
     }
 
-    pub async fn edit(&self, id: Uuid, user: User) {
+    pub async fn edit(&self, id: Uuid, user: User) -> bool {
         let rec = sqlx::query!(r#"--sql
             UPDATE users
             SET
@@ -61,9 +62,11 @@ impl Users {
         .execute(&self.pool)
         .await
         .expect("Something went wrong while updating user with id: {id:?}");
+
+        rec.rows_affected() > 0
     }
 
-    pub async fn delete(&self, id: Uuid) {
+    pub async fn delete(&self, id: Uuid) -> bool {
         let rec = sqlx::query!(r#"--sql
             DELETE FROM users
             WHERE
@@ -72,6 +75,8 @@ impl Users {
         .execute(&self.pool)
         .await
         .expect("Something went wrong while deleting user with id: {id:?}");
+
+        rec.rows_affected() > 0
     }
 
 

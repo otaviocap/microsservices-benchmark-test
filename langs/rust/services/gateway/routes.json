@@ -2,9 +2,5 @@
     {
         "name": "db",
         "redirect": "http://rust-db-consumer:8080/"
-    },
-    {
-        "name": "users",
-        "redirect": "http://rust-db-consumer:8080/"
     }
 ]

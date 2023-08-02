@@ -1,0 +1,6 @@
+[
+    {
+        "name": "db",
+        "redirect": "http://go-db-consumer:8080/"
+    }
+]

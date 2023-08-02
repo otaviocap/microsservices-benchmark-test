@@ -1,6 +1,6 @@
 FROM golang:1.20
 
-WORKDIR /usr/src/go-microsservice
+WORKDIR /app
 COPY . .
 
 # Download all the dependencies
@@ -10,4 +10,4 @@ RUN go get -d -v ./...
 RUN go install -v ./...
 
 # Run the executable
-CMD ["go-microsservice"]
+CMD ["go-db-consumer"]

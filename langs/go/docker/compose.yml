@@ -1,5 +1,0 @@
-services:
-  go-microsservice:
-    build:
-      context: ../
-      dockerfile: ./docker/Dockerfile

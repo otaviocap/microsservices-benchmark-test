@@ -2,7 +2,7 @@ services:
   rust-gateway:
     build: services/gateway/
     ports:
-      - 9000:8080
+      - 9010:8080
   rust-db-consumer:
     build: services/db-consumer/
     env_file:
